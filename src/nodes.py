@@ -25,8 +25,17 @@ def research_node(state: AgentState):
     
     print(f"--- RESEARCHING: {target} ---")
     
+    # Auto-detect if input is a website
+    is_website = False
+    if "http" in target or "www." in target or any(target.endswith(ext) for ext in [".com", ".org", ".net", ".io", ".ai", ".co"]):
+        is_website = True
+        
+    search_query = target
+    if is_website:
+        search_query = f"site:{target} OR {target}"
+    
     search = TavilySearchResults(max_results=3)
-    search_results = search.invoke(target)
+    search_results = search.invoke(search_query)
     
     # Simple synthesis of results
     summary_prompt = ChatPromptTemplate.from_messages([

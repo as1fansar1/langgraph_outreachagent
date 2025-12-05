@@ -18,7 +18,7 @@ st.markdown("Enter a company or person's name to generate a personalized outreac
 # Input
 col1, col2, col3 = st.columns([2, 1, 1])
 with col1:
-    target = st.text_input("Target Company / Person", placeholder="e.g. SpaceX, Sam Altman")
+    target = st.text_input("Target Company / Person / Website", placeholder="e.g. SpaceX, Sam Altman, anthropic.com")
 with col2:
     model_name = st.selectbox(
         "Select Model",
@@ -138,3 +138,30 @@ if st.button("Generate Outreach"):
                     
             except Exception as e:
                 st.error(f"An error occurred: {e}")
+
+# How to Use Section
+st.markdown("---")
+with st.expander("ℹ️ How to Use & What to Expect", expanded=False):
+    st.markdown("""
+    ### How to Use
+    1. **Enter Target**: Type the name of a company (e.g., *SpaceX*), a person (e.g., *Sam Altman*), or a website URL (e.g., *anthropic.com*).
+    2. **Select Model**: Choose the AI model you want to use for generation.
+    3. **Choose Method**: Select how you plan to reach out (Email, LinkedIn, or WhatsApp).
+    4. **Generate**: Click the button and watch the agent research, profile, and draft your message!
+
+    ### Outreach Methods
+    - **📧 Email**: Generates a professional, structured email with a clear subject line, suitable for formal business outreach.
+    - **💼 LinkedIn**: Creates a concise, professional yet conversational message designed for direct messaging on LinkedIn.
+    - **💬 WhatsApp**: Produces a short, casual, and direct message suitable for quick mobile communication.
+    """)
+
+# Footer
+st.markdown("---")
+st.markdown(
+    """
+    <div style="text-align: center; color: #666;">
+        Built with <span style="color: #ff4b4b;">&hearts;</span> by <a href="https://x.com/as1fansar1" target="_blank" style="text-decoration: none; color: #666; font-weight: bold;">Asif</a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)

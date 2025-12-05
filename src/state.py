@@ -9,3 +9,4 @@ class AgentState(TypedDict):
     critique_feedback: Optional[str]
     revision_count: int
     outreach_method: str
+    website: Optional[str]
