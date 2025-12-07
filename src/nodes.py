@@ -87,6 +87,7 @@ def draft_node(state: AgentState):
     profile = state["prospect_profile"]
     model_name = state.get("model_name", "llama-3.3-70b-versatile")
     outreach_method = state.get("outreach_method", "Email")
+    custom_instructions = state.get("custom_instructions", "")
     llm = get_llm(model_name)
     
     # Method specific guidelines
@@ -98,13 +99,18 @@ def draft_node(state: AgentState):
     
     method_instruction = guidelines.get(outreach_method, guidelines["Email"])
     
+    # Build custom instructions section
+    custom_section = ""
+    if custom_instructions and custom_instructions.strip():
+        custom_section = f"\n\nAdditional User Instructions: {custom_instructions}"
+    
     draft_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a top-tier copywriter. Write a personalized {outreach_method} message to a key contact at the company. Use the 'hooks' from the profile to make it relevant. \n\nGuidelines: {method_instruction}"),
+        ("system", "You are a top-tier copywriter. Write a personalized {outreach_method} message to a key contact at the company. Use the 'hooks' from the profile to make it relevant. \n\nGuidelines: {method_instruction}{custom_section}"),
         ("user", "Prospect Profile: {profile}")
     ])
     
     chain = draft_prompt | llm
-    draft = chain.invoke({"profile": json.dumps(profile), "outreach_method": outreach_method, "method_instruction": method_instruction})
+    draft = chain.invoke({"profile": json.dumps(profile), "outreach_method": outreach_method, "method_instruction": method_instruction, "custom_section": custom_section})
     
     return {"draft_message": draft.content, "revision_count": state.get("revision_count", 0) + 1}
 

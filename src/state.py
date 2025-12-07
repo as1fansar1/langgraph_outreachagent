@@ -10,3 +10,4 @@ class AgentState(TypedDict):
     revision_count: int
     outreach_method: str
     website: Optional[str]
+    custom_instructions: Optional[str]

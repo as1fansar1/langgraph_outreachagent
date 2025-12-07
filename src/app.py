@@ -35,6 +35,12 @@ with col3:
         index=0
     )
 
+custom_instructions = st.text_area(
+    "Custom Instructions (Optional)",
+    placeholder="e.g., Mention our new AI product, focus on cost savings, keep it under 100 words...",
+    height=80
+)
+
 if st.button("Generate Outreach"):
     if not target:
         st.warning("Please enter a target.")
@@ -49,6 +55,7 @@ if st.button("Generate Outreach"):
                     "target_input": target, 
                     "model_name": model_name, 
                     "outreach_method": outreach_method,
+                    "custom_instructions": custom_instructions,
                     "revision_count": 0
                 }
                 final_state = None
